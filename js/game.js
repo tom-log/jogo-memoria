@@ -1,5 +1,7 @@
 const grid = document.querySelector('.grid');
 const spanPlayer = document.querySelector('.player');
+const timer = document.querySelector('.timer');
+
 
 const characters = [
   'beth',
@@ -27,7 +29,8 @@ const checkEndGame = () => {
   const disabledCards = document.querySelectorAll('.disabled-card');
 
   if (disabledCards.length === 20) {
-    alert('Parabéns, sua memória tá boazinha 🤑');
+    clearInterval(this.loop);
+    alert(`Parabéns ${spanPlayer.innerHTML}! seu tempo foi ${timer.innerHTML} segundos.`);
   }
 }
 
@@ -108,10 +111,19 @@ const loadGame = () => {
   });
 }
 
+// Inicia o cronometro
+const startTime = () => {
+  this.loop = setInterval(() => {
+    const currentTime = +timer.innerHTML;
+    timer.innerHTML = currentTime + 1;
+  }, 1000);
+}
 
-// pega o nome do jogador no localStorage e coloca no span e depois carrega o jogo
+
+
+// Pega o nome do jogador no localStorage e coloca no span e depois carrega o jogo
 window.onload = () => {
   spanPlayer.innerHTML = localStorage.getItem('player');
+  startTime();
   loadGame();
-
 }
